@@ -6,8 +6,8 @@
 <title>Calculators | Engineering Tools Hub</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.tabs{display:flex;gap:10px;margin-bottom:25px;flex-wrap:wrap}
-.tab-btn{padding:12px 20px;border:none;background:#e2e8f0;border-radius:8px;cursor:pointer;font-weight:600}
+.tabs{display:flex;gap:8px;margin-bottom:25px;flex-wrap:wrap}
+.tab-btn{padding:10px 16px;border:none;background:#e2e8f0;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.9rem}
 .tab-btn.active{background:#0f172a;color:#fff}
 .calc-card{display:none;background:#fff;padding:28px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
 .calc-card.active{display:block}
@@ -39,93 +39,109 @@ input,select{width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:8p
 <button class="tab-btn" onclick="showCalc('gear', this)">Gear Ratio</button>
 <button class="tab-btn" onclick="showCalc('units', this)">Unit Converter</button>
 <button class="tab-btn" onclick="showCalc('power', this)">Motor Power</button>
+<button class="tab-btn" onclick="showCalc('ohm', this)">Ohm's Law</button>
+<button class="tab-btn" onclick="showCalc('pressure', this)">Pressure</button>
+<button class="tab-btn" onclick="showCalc('temp', this)">Temperature</button>
+<button class="tab-btn" onclick="showCalc('speed', this)">Speed</button>
 </div>
 
-<!-- Torque -->
+<!-- 1. Torque -->
 <div id="torque" class="calc-card active">
 <h3 style="margin-bottom:18px;color:#0f172a">Torque Calculator</h3>
-<div class="form-group">
-<label>Force (N)</label>
-<input type="number" id="force" placeholder="Enter force">
-</div>
-<div class="form-group">
-<label>Distance (m)</label>
-<input type="number" id="distance" placeholder="Enter distance">
-</div>
+<div class="form-group"><label>Force (N)</label><input type="number" id="force" placeholder="Enter force"></div>
+<div class="form-group"><label>Distance (m)</label><input type="number" id="distance" placeholder="Enter distance"></div>
 <button class="calc-btn" onclick="calcTorque()">Calculate</button>
 <div class="result" id="torqueResult"></div>
 </div>
 
-<!-- Gear -->
+<!-- 2. Gear Ratio -->
 <div id="gear" class="calc-card">
 <h3 style="margin-bottom:18px;color:#0f172a">Gear Ratio Calculator</h3>
-<div class="form-group">
-<label>Teeth on Driven Gear</label>
-<input type="number" id="driven" placeholder="Driven gear teeth">
-</div>
-<div class="form-group">
-<label>Teeth on Driving Gear</label>
-<input type="number" id="driving" placeholder="Driving gear teeth">
-</div>
+<div class="form-group"><label>Teeth on Driven Gear</label><input type="number" id="driven" placeholder="Driven gear teeth"></div>
+<div class="form-group"><label>Teeth on Driving Gear</label><input type="number" id="driving" placeholder="Driving gear teeth"></div>
 <button class="calc-btn" onclick="calcGear()">Calculate</button>
 <div class="result" id="gearResult"></div>
 </div>
 
-<!-- Units -->
+<!-- 3. Unit Converter -->
 <div id="units" class="calc-card">
 <h3 style="margin-bottom:18px;color:#0f172a">Unit Converter</h3>
-<div class="form-group">
-<label>Value</label>
-<input type="number" id="unitValue" placeholder="Enter value">
-</div>
-<div class="form-group">
-<label>From</label>
+<div class="form-group"><label>Value</label><input type="number" id="unitValue" placeholder="Enter value"></div>
+<div class="form-group"><label>From</label>
 <select id="fromUnit">
-<option value="mm">mm</option>
-<option value="cm">cm</option>
-<option value="m">m</option>
-<option value="inch">inch</option>
-<option value="n">Newton (N)</option>
-<option value="kgf">kgf</option>
-</select>
-</div>
-<div class="form-group">
-<label>To</label>
+<option value="mm">mm</option><option value="cm">cm</option><option value="m">m</option>
+<option value="inch">inch</option><option value="n">Newton (N)</option><option value="kgf">kgf</option>
+</select></div>
+<div class="form-group"><label>To</label>
 <select id="toUnit">
-<option value="mm">mm</option>
-<option value="cm">cm</option>
-<option value="m">m</option>
-<option value="inch">inch</option>
-<option value="n">Newton (N)</option>
-<option value="kgf">kgf</option>
-</select>
-</div>
+<option value="mm">mm</option><option value="cm">cm</option><option value="m">m</option>
+<option value="inch">inch</option><option value="n">Newton (N)</option><option value="kgf">kgf</option>
+</select></div>
 <button class="calc-btn" onclick="convertUnit()">Convert</button>
 <div class="result" id="unitResult"></div>
 </div>
 
-<!-- Power -->
+<!-- 4. Motor Power -->
 <div id="power" class="calc-card">
 <h3 style="margin-bottom:18px;color:#0f172a">Basic Motor Power Estimator</h3>
-<div class="form-group">
-<label>Torque (N·m)</label>
-<input type="number" id="motorTorque" placeholder="Enter torque">
-</div>
-<div class="form-group">
-<label>Speed (RPM)</label>
-<input type="number" id="motorRpm" placeholder="Enter RPM">
-</div>
+<div class="form-group"><label>Torque (N·m)</label><input type="number" id="motorTorque" placeholder="Enter torque"></div>
+<div class="form-group"><label>Speed (RPM)</label><input type="number" id="motorRpm" placeholder="Enter RPM"></div>
 <button class="calc-btn" onclick="calcPower()">Calculate Power</button>
 <div class="result" id="powerResult"></div>
+</div>
+
+<!-- 5. Ohm's Law -->
+<div id="ohm" class="calc-card">
+<h3 style="margin-bottom:18px;color:#0f172a">Ohm's Law Calculator</h3>
+<div class="form-group"><label>Voltage (V)</label><input type="number" id="voltage" placeholder="Enter voltage"></div>
+<div class="form-group"><label>Current (A)</label><input type="number" id="current" placeholder="Enter current"></div>
+<button class="calc-btn" onclick="calcOhm()">Calculate Resistance</button>
+<div class="result" id="ohmResult"></div>
+</div>
+
+<!-- 6. Pressure -->
+<div id="pressure" class="calc-card">
+<h3 style="margin-bottom:18px;color:#0f172a">Pressure Calculator</h3>
+<div class="form-group"><label>Force (N)</label><input type="number" id="pForce" placeholder="Enter force"></div>
+<div class="form-group"><label>Area (m²)</label><input type="number" id="pArea" placeholder="Enter area"></div>
+<button class="calc-btn" onclick="calcPressure()">Calculate Pressure</button>
+<div class="result" id="pressureResult"></div>
+</div>
+
+<!-- 7. Temperature -->
+<div id="temp" class="calc-card">
+<h3 style="margin-bottom:18px;color:#0f172a">Temperature Converter</h3>
+<div class="form-group"><label>Value</label><input type="number" id="tempValue" placeholder="Enter temperature"></div>
+<div class="form-group"><label>From</label>
+<select id="tempFrom">
+<option value="c">Celsius (°C)</option>
+<option value="f">Fahrenheit (°F)</option>
+<option value="k">Kelvin (K)</option>
+</select></div>
+<div class="form-group"><label>To</label>
+<select id="tempTo">
+<option value="c">Celsius (°C)</option>
+<option value="f">Fahrenheit (°F)</option>
+<option value="k">Kelvin (K)</option>
+</select></div>
+<button class="calc-btn" onclick="convertTemp()">Convert</button>
+<div class="result" id="tempResult"></div>
+</div>
+
+<!-- 8. Speed -->
+<div id="speed" class="calc-card">
+<h3 style="margin-bottom:18px;color:#0f172a">Speed Calculator</h3>
+<div class="form-group"><label>Distance (m)</label><input type="number" id="sDistance" placeholder="Enter distance"></div>
+<div class="form-group"><label>Time (s)</label><input type="number" id="sTime" placeholder="Enter time"></div>
+<button class="calc-btn" onclick="calcSpeed()">Calculate Speed</button>
+<div class="result" id="speedResult"></div>
 </div>
 
 </div>
 </section>
 
 <footer>
-<div class="container">
-<p>Engineering Tools Hub • Free practical tools</p>
-</div>
+<div class="container"><p>Engineering Tools Hub • Free practical tools</p></div>
 </footer>
 
 <script>
@@ -141,8 +157,7 @@ function calcTorque() {
   var d = parseFloat(document.getElementById('distance').value);
   var r = document.getElementById('torqueResult');
   if (isNaN(f) || isNaN(d)) { r.style.display='block'; r.innerHTML='Enter valid numbers'; return; }
-  r.style.display='block';
-  r.innerHTML = 'Torque = <strong>' + (f*d).toFixed(2) + ' N·m</strong>';
+  r.style.display='block'; r.innerHTML = 'Torque = <strong>' + (f*d).toFixed(2) + ' N·m</strong>';
 }
 
 function calcGear() {
@@ -150,8 +165,7 @@ function calcGear() {
   var b = parseFloat(document.getElementById('driving').value);
   var r = document.getElementById('gearResult');
   if (isNaN(a) || isNaN(b) || b===0) { r.style.display='block'; r.innerHTML='Enter valid numbers'; return; }
-  r.style.display='block';
-  r.innerHTML = 'Gear Ratio = <strong>' + (a/b).toFixed(3) + ' : 1</strong>';
+  r.style.display='block'; r.innerHTML = 'Gear Ratio = <strong>' + (a/b).toFixed(3) + ' : 1</strong>';
 }
 
 function convertUnit() {
@@ -160,21 +174,12 @@ function convertUnit() {
   var to = document.getElementById('toUnit').value;
   var r = document.getElementById('unitResult');
   if (isNaN(value)) { r.style.display='block'; r.innerHTML='Enter a valid number'; return; }
-
   var base = {mm:0.001, cm:0.01, m:1, inch:0.0254, n:1, kgf:9.80665};
-  var length = ['mm','cm','m','inch'];
-  var force = ['n','kgf'];
-  var result;
-
-  if (length.indexOf(from) > -1 && length.indexOf(to) > -1) {
-    result = value * base[from] / base[to];
-  } else if (force.indexOf(from) > -1 && force.indexOf(to) > -1) {
-    result = value * base[from] / base[to];
-  } else {
-    r.style.display='block'; r.innerHTML='Cannot convert between length and force'; return;
-  }
-  r.style.display='block';
-  r.innerHTML = 'Result = <strong>' + result.toFixed(4) + ' ' + to + '</strong>';
+  var length = ['mm','cm','m','inch'], force = ['n','kgf'], result;
+  if (length.indexOf(from)>-1 && length.indexOf(to)>-1) result = value * base[from] / base[to];
+  else if (force.indexOf(from)>-1 && force.indexOf(to)>-1) result = value * base[from] / base[to];
+  else { r.style.display='block'; r.innerHTML='Cannot convert between length and force'; return; }
+  r.style.display='block'; r.innerHTML = 'Result = <strong>' + result.toFixed(4) + ' ' + to + '</strong>';
 }
 
 function calcPower() {
@@ -182,9 +187,53 @@ function calcPower() {
   var rpm = parseFloat(document.getElementById('motorRpm').value);
   var r = document.getElementById('powerResult');
   if (isNaN(t) || isNaN(rpm)) { r.style.display='block'; r.innerHTML='Enter valid numbers'; return; }
-  var power = (t * rpm) / 9549;
-  r.style.display='block';
-  r.innerHTML = 'Power ≈ <strong>' + power.toFixed(3) + ' kW</strong>';
+  r.style.display='block'; r.innerHTML = 'Power ≈ <strong>' + ((t*rpm)/9549).toFixed(3) + ' kW</strong>';
+}
+
+function calcOhm() {
+  var v = parseFloat(document.getElementById('voltage').value);
+  var i = parseFloat(document.getElementById('current').value);
+  var r = document.getElementById('ohmResult');
+  if (isNaN(v) || isNaN(i) || i===0) { r.style.display='block'; r.innerHTML='Enter valid numbers'; return; }
+  r.style.display='block'; r.innerHTML = 'Resistance = <strong>' + (v/i).toFixed(2) + ' Ω</strong>';
+}
+
+function calcPressure() {
+  var f = parseFloat(document.getElementById('pForce').value);
+  var a = parseFloat(document.getElementById('pArea').value);
+  var r = document.getElementById('pressureResult');
+  if (isNaN(f) || isNaN(a) || a===0) { r.style.display='block'; r.innerHTML='Enter valid numbers'; return; }
+  r.style.display='block'; r.innerHTML = 'Pressure = <strong>' + (f/a).toFixed(2) + ' Pa</strong>';
+}
+
+function convertTemp() {
+  var value = parseFloat(document.getElementById('tempValue').value);
+  var from = document.getElementById('tempFrom').value;
+  var to = document.getElementById('tempTo').value;
+  var r = document.getElementById('tempResult');
+  if (isNaN(value)) { r.style.display='block'; r.innerHTML='Enter a valid number'; return; }
+
+  // Convert to Celsius first
+  var c;
+  if (from === 'c') c = value;
+  else if (from === 'f') c = (value - 32) * 5/9;
+  else c = value - 273.15;
+
+  var result;
+  if (to === 'c') result = c;
+  else if (to === 'f') result = c * 9/5 + 32;
+  else result = c + 273.15;
+
+  var unit = to === 'c' ? '°C' : (to === 'f' ? '°F' : 'K');
+  r.style.display='block'; r.innerHTML = 'Result = <strong>' + result.toFixed(2) + ' ' + unit + '</strong>';
+}
+
+function calcSpeed() {
+  var d = parseFloat(document.getElementById('sDistance').value);
+  var t = parseFloat(document.getElementById('sTime').value);
+  var r = document.getElementById('speedResult');
+  if (isNaN(d) || isNaN(t) || t===0) { r.style.display='block'; r.innerHTML='Enter valid numbers'; return; }
+  r.style.display='block'; r.innerHTML = 'Speed = <strong>' + (d/t).toFixed(2) + ' m/s</strong>';
 }
 </script>
 </body>
