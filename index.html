@@ -3,67 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Tools Hub</title>
+    <title>Calculators | Engineering Tools Hub</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            background: #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .tab-btn.active {
+            background: #0f172a;
+            color: white;
+        }
+        .calc-card {
+            display: none;
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+        .calc-card.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .calc-btn {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .result {
+            margin-top: 18px;
+            padding: 14px;
+            background: #e0f2fe;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav>
         <div class="container">
             <a href="index.html" class="logo">EngTools Hub</a>
             <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="calculators.html">Calculators</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculators.html" class="active">Calculators</a></li>
                 <li><a href="about.html">About</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <h1>Engineering Tools Hub</h1>
-            <p>Free practical calculators and tools for engineering students and professionals. Simple, fast, and useful.</p>
-            <a href="calculators.html" class="btn">Open Calculators</a>
-        </div>
-    </section>
-
-    <!-- Features -->
     <section>
         <div class="container">
-            <h2 class="section-title">Available Tools</h2>
+            <h2 class="section-title">Engineering Calculators</h2>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
-                <div class="card">
-                    <h3 style="color:#0f172a; margin-bottom:12px;">Torque Calculator</h3>
-                    <p>Calculate torque from force and distance. Useful for mechanical and mechatronics work.</p>
-                </div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showCalc('torque', this)">Torque</button>
+                <button class="tab-btn" onclick="showCalc('gear', this)">Gear Ratio</button>
+                <button class="tab-btn" onclick="showCalc('units', this)">Unit Converter</button>
+                <button class="tab-btn" onclick="showCalc('power', this)">Motor Power</button>
+            </div>
 
-                <div class="card">
-                    <h3 style="color:#0f172a; margin-bottom:12px;">Gear Ratio Calculator</h3>
-                    <p>Quickly find gear ratios using number of teeth on driving and driven gears.</p>
+            <!-- Torque -->
+            <div id="torque" class="calc-card active">
+                <h3 style="margin-bottom:18px; color:#0f172a;">Torque Calculator</h3>
+                <div class="form-group">
+                    <label>Force (N)</label>
+                    <input type="number" id="force" placeholder="Enter force">
                 </div>
+                <div class="form-group">
+                    <label>Distance (m)</label>
+                    <input type="number" id="distance" placeholder="Enter distance">
+                </div>
+                <button class="calc-btn" onclick="calcTorque()">Calculate</button>
+                <div class="result" id="torqueResult"></div>
+            </div>
 
-                <div class="card">
-                    <h3 style="color:#0f172a; margin-bottom:12px;">Unit Converter</h3>
-                    <p>Convert between common engineering units for length, force, and more.</p>
+            <!-- Gear Ratio -->
+            <div id="gear" class="calc-card">
+                <h3 style="margin-bottom:18px; color:#0f172a;">Gear Ratio Calculator</h3>
+                <div class="form-group">
+                    <label>Teeth on Driven Gear</label>
+                    <input type="number" id="driven" placeholder="Driven gear teeth">
                 </div>
+                <div class="form-group">
+                    <label>Teeth on Driving Gear</label>
+                    <input type="number" id="driving" placeholder="Driving gear teeth">
+                </div>
+                <button class="calc-btn" onclick="calcGear()">Calculate</button>
+                <div class="result" id="gearResult"></div>
+            </div>
 
-                <div class="card">
-                    <h3 style="color:#0f172a; margin-bottom:12px;">More Tools Coming</h3>
-                    <p>Additional calculators and practical tools will be added regularly.</p>
+            <!-- Unit Converter -->
+            <div id="units" class="calc-card">
+                <h3 style="margin-bottom:18px; color:#0f172a;">Unit Converter</h3>
+                <div class="form-group">
+                    <label>Value</label>
+                    <input type="number" id="unitValue" placeholder="Enter value">
                 </div>
+                <div class="form-group">
+                    <label>From</label>
+                    <select id="fromUnit">
+                        <option value="mm">mm</option>
+                        <option value="cm">cm</option>
+                        <option value="m">m</option>
+                        <option value="inch">inch</option>
+                        <option value="n">Newton (N)</option>
+                        <option value="kgf">kgf</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>To</label>
+                    <select id="toUnit">
+                        <option value="mm">mm</option>
+                        <option value="cm">cm</option>
+                        <option value="m">m</option>
+                        <option value="inch">inch</option>
+                        <option value="n">Newton (N)</option>
+                        <option value="kgf">kgf</option>
+                    </select>
+                </div>
+                <button class="calc-btn" onclick="convertUnit()">Convert</button>
+                <div class="result" id="unitResult"></div>
+            </div>
+
+            <!-- Motor Power -->
+            <div id="power" class="calc-card">
+                <h3 style="margin-bottom:18px; color:#0f172a;">Basic Motor Power Estimator</h3>
+                <div class="form-group">
+                    <label>Torque (N·m)</label>
+                    <input type="number" id="motorTorque" placeholder="Enter torque">
+                </div>
+                <div class="form-group">
+                    <label>Speed (RPM)</label>
+                    <input type="number" id="motorRpm" placeholder="Enter RPM">
+                </div>
+                <button class="calc-btn" onclick="calcPower()">Calculate Power</button>
+                <div class="result" id="powerResult"></div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>Engineering Tools Hub • Free practical tools for students & engineers</p>
+            <p>Engineering Tools Hub • Free practical tools</p>
         </div>
     </footer>
 
+    <script>
+        function showCalc(id, btn) {
+            // Hide all calculator cards
+            document.querySelectorAll('.calc-card').forEach(function(card) {
+                card.classList.remove('active');
+            });
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-btn').forEach(function(button) {
+                button.classList.remove('active');
+            });
+            // Show the selected card
+            document.getElementById(id).classList.add('active');
+            // Make the clicked button active
+            btn.classList.add('active');
+        }
+
+        function calcTorque() {
+            var force = parseFloat(document.getElementById('force').value);
+            var distance = parseFloat(document.getElementById('distance').value);
+            var resultDiv = document.getElementById('torqueResult');
+
+            if (isNaN(force) || isNaN(distance)) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Please enter valid numbers';
+                return;
+            }
+            var torque = force * distance;
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = 'Torque = <strong>' + torque.toFixed(2) + ' N·m</strong>';
+        }
+
+        function calcGear() {
+            var driven = parseFloat(document.getElementById('driven').value);
+            var driving = parseFloat(document.getElementById('driving').value);
+            var resultDiv = document.getElementById('gearResult');
+
+            if (isNaN(driven) || isNaN(driving) || driving === 0) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Please enter valid numbers';
+                return;
+            }
+            var ratio = driven / driving;
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = 'Gear Ratio = <strong>' + ratio.toFixed(3) + ' : 1</strong>';
+        }
+
+        function convertUnit() {
+            var value = parseFloat(document.getElementById('unitValue').value);
+            var from = document.getElementById('fromUnit').value;
+            var to = document.getElementById('toUnit').value;
+            var resultDiv = document.getElementById('unitResult');
+
+            if (isNaN(value)) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Please enter a valid number';
+                return;
+            }
+
+            var toBase = {
+                mm: 0.001,
+                cm: 0.01,
+                m: 1,
+                inch: 0.0254,
+                n: 1,
+                kgf: 9.80665
+            };
+
+            var lengthUnits = ['mm', 'cm', 'm', 'inch'];
+            var forceUnits = ['n', 'kgf'];
+            var result;
+
+            if (lengthUnits.indexOf(from) !== -1 && lengthUnits.indexOf(to) !== -1) {
+                result = value * toBase[from] / toBase[to];
+            } else if (forceUnits.indexOf(from) !== -1 && forceUnits.indexOf(to) !== -1) {
+                result = value * toBase[from] / toBase[to];
+            } else {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Cannot convert between length and force units';
+                return;
+            }
+
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = 'Result = <strong>' + result.toFixed(4) + ' ' + to + '</strong>';
+        }
+
+        function calcPower() {
+            var torque = parseFloat(document.getElementById('motorTorque').value);
+            var rpm = parseFloat(document.getElementById('motorRpm').value);
+            var resultDiv = document.getElementById('powerResult');
+
+            if (isNaN(torque) || isNaN(rpm)) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Please enter valid numbers';
+                return;
+            }
+            // Power (kW) = (Torque × RPM) / 9549
+            var power = (torque * rpm) / 9549;
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = 'Power ≈ <strong>' + power.toFixed(3) + ' kW</strong>';
+        }
+    </script>
 </body>
 </html>
